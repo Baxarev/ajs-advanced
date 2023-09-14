@@ -1,22 +1,28 @@
-export function orderByProps(obj, fistElements) {
-  const fistElementsArr = [];
+export function orderByProps(obj, firstElements) {
+  const firstElementsArr = [];
   const lastElementsArr = [];
 
-  for (let elment in obj) {
-    if (fistElements.includes(elment)) {
-      fistElementsArr.push({
-        key: elment,
-        value: obj[elment],
-      })
-    } else {
-      lastElementsArr.push({
-        key: elment,
-        value: obj[elment],
-      })
+  // Перебор по firstElements для гарантированного порядка ключей
+  for (let element of firstElements) {
+    if (obj.hasOwnProperty(element)) {
+      firstElementsArr.push({
+        key: element,
+        value: obj[element],
+      });
     }
   }
 
-  lastElementsArr.sort((a,b) => {
+  // Перебор по всем свойствам объекта
+  for (let element in obj) {
+    if (!firstElements.includes(element)) {
+      lastElementsArr.push({
+        key: element,
+        value: obj[element],
+      });
+    }
+  }
+
+  lastElementsArr.sort((a, b) => {
     if (a.key < b.key) {
       return -1;
     }
@@ -26,5 +32,5 @@ export function orderByProps(obj, fistElements) {
     return 0;
   });
 
-  return [...fistElementsArr, ...lastElementsArr];
+  return [...firstElementsArr, ...lastElementsArr];
 }
