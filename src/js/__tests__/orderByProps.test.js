@@ -15,4 +15,20 @@ describe('test orderByProps', () => {
     {key: 'defence', value: 40},
     {key: 'health', value: 10}]);
   })
+
+  it('test orderByProps 2', () => {
+    const obj = {
+        a: 1,
+        A: 2,
+        b: 3
+    };
+  
+    const arr = orderByProps(obj, [])
+  
+    expect(arr).toEqual([
+        {key: 'A', value: 2},
+        {key: 'a', value: 1},
+        {key: 'b', value: 3}
+    ]);
+  });
 })
